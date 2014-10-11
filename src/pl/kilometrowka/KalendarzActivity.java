@@ -1,18 +1,31 @@
 package pl.kilometrowka;
 
+import pl.kilometrowka.fragments.KalendarzFragment;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.FrameLayout;
 
 public class KalendarzActivity extends ActionBarActivity implements OnClickListener {
 
+	FrameLayout kontener;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_kalendarz);
+		
+		kontener = (FrameLayout) findViewById(R.id.kontener);
+		
+		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+		KalendarzFragment fishesFragment = new KalendarzFragment();    	 
+	    ft.replace(R.id.kontener, fishesFragment);
+	    ft.commit();
+		
 	}
 
 
