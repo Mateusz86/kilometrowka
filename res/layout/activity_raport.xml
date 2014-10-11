@@ -11,22 +11,11 @@
     android:gravity="center"
      >
 
-    <Button
-        android:id="@+id/kalendarz"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/kalendarz" />
-
-    <Button
-        android:id="@+id/raport"
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/raport" />
 
-    <Button
-        android:id="@+id/ustawienia"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/ustawienia" />
+
 
 </LinearLayout>
