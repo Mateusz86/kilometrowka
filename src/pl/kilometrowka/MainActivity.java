@@ -1,5 +1,7 @@
 package pl.kilometrowka;
 
+
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
@@ -11,6 +13,7 @@ import pl.kilometrowka.dao.TrasaDao;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,6 +26,7 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 	private Button kalendarz;
 	private Button raport;
 	private Button ustawienia;
+	public final String TAG= MainActivity.class.getSimpleName();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -35,21 +39,35 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 
 		// test bazy danych
 		DaoSession daoSession = DataBase.getInstance().getDaoSession();
-
+		daoSession.getTrasaDao().deleteAll();
+		daoSession.getStawkiKierowcyDao().deleteAll();
+		daoSession.getStawkiPasazeraDao().deleteAll();
+		
 		TrasaDao trasaDao = daoSession.getTrasaDao();
 
 		Trasa trasa = new Trasa();
-		trasa.setMiasta("Kraków,Katowice");
+		trasa.setMiasta("Krak—w,Katowice");
 		trasa.setKm(new Double(23.0));
 		trasa.setKierowca(true);
 		trasa.setAutoSluzbowe(true);
-		trasa.setData(new Date());
+		
+		String dateString =AppSettings.DATE_YMD_FORMAT.format(new Date());
+		try {
+		Date dataTemp=AppSettings.DATE_YMD_FORMAT.parse(dateString);
+		trasa.setData(dataTemp);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 
 		trasaDao.insert(trasa);
 
 		List<Trasa> trasy = trasaDao.queryBuilder().build().list();
 		System.out.println("trasy");
 		System.out.println(trasy);
+		Log.e(TAG,trasy.get(0).getData()+"");
 	}
 
 	private void setUpView() {

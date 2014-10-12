@@ -24,15 +24,18 @@
         </activity>
         <activity
             android:name="pl.kilometrowka.KalendarzActivity"
-            android:label="@string/kalendarz" >
+            android:label="@string/kalendarz"
+            >
         </activity>
         <activity
             android:name="pl.kilometrowka.RaportActivity"
-            android:label="@string/raport" >
+            android:label="@string/raport"
+             >
         </activity>
         <activity
             android:name="pl.kilometrowka.UstawieniaActivity"
-            android:label="@string/ustawienia" >
+            android:label="@string/ustawienia"
+             >
         </activity>
     </application>
 

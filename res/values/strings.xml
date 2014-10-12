@@ -2,11 +2,15 @@
 <resources>
 
     <string name="app_name">Kilometrowka</string>
-    
     <string name="kalendarz">Kalendarz</string>
     <string name="raport">Raport</string>
     <string name="ustawienia">Ustawienia</string>
-    
     <string name="action_settings">Settings</string>
+    <string name="pokazListeTras">Pokaz Liste Tras</string>
 
+    <string name="trasa">Trasa:</string>
+    <string name="km">Przejechange KM:</string>
+    <string name="samochod">Samochod:</string>
+    <string name="data">Data:</string>
+    <string name="delete">Delete:</string>
 </resources>
