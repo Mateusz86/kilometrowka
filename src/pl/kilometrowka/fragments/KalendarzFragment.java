@@ -10,6 +10,8 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -25,6 +27,15 @@ public class KalendarzFragment extends Fragment implements OnClickListener {
 	private Button showListTrace;
 	ChangeFragment changeFragmentListener;
 
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onCreate(savedInstanceState);
+		setHasOptionsMenu(false);
+		setMenuVisibility(false);
+		
+	}
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -101,4 +112,14 @@ public class KalendarzFragment extends Fragment implements OnClickListener {
     }
 	
 	
+	
+	@Override
+    public void setHasOptionsMenu(boolean hasOptions){
+     //   this.hasOptions = hasOptions;
+        super.setHasOptionsMenu(true);
+    }
+
+
+	
+
 }

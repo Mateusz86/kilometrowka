@@ -22,13 +22,14 @@ public class Adapter<T> extends BaseAdapter {
 	private List<?> list;
 	private Context context;
 	private LayoutInflater inflater;
+	private OnClickListener deleteListener;
 	
 	
-	
-	public Adapter(List<?> list, Context context) {
+	public Adapter(List<?> list, Context context,OnClickListener deleteListener) {
 		this.list = list;
 		this.context = context;
 		this.inflater= LayoutInflater.from(context);
+		this.deleteListener=deleteListener;
 	}
 
 	@Override
@@ -82,27 +83,27 @@ public class Adapter<T> extends BaseAdapter {
         	mViewHolder.data.setText(((Trasa)object).getData().toString()+"");
         }
         
-		mViewHolder.delete.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				DaoSession daoSession = DataBase.getInstance().getDaoSession();
-				List<Trasa> trasy = daoSession.getTrasaDao().queryBuilder().build().list();
-			//	Trasa trasaToDelete = trasy.get(position);
-			}
-		});
+        mViewHolder.delete.setTag(position);
+        mViewHolder.delete.setOnClickListener(deleteListener);
+	
 		return row;
 	}
 
-//	trasa.setMiasta("Kraków,Katowice");
-//	trasa.setKm(new Double(23.0));
-//	trasa.setKierowca(true);
-//	trasa.setAutoSluzbowe(true);
-//	trasa.setData(new Date());
 	
 	private class MyViewHolder {
         TextView trasa,km,data,samochod,kierowca;
         Button delete;
     }
+
+
+	public List<?> getList() {
+		return list;
+	}
+
+	public void setList(List<?> list) {
+		this.list = list;
+	}
+	
+	
 	
 }

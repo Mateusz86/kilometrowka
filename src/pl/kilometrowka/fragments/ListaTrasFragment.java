@@ -6,13 +6,17 @@ import java.util.List;
 import pl.kilometrowka.KalendarzActivity;
 import pl.kilometrowka.R;
 import pl.kilometrowka.adapter.Adapter;
+import pl.kilometrowka.dao.DaoSession;
+import pl.kilometrowka.dao.DataBase;
 import pl.kilometrowka.dao.Trasa;
 import pl.kilometrowka.utils.TrasaUtils;
+import android.hardware.Camera.Size;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
@@ -23,6 +27,22 @@ public class ListaTrasFragment extends Fragment {
  private ListView listView;
  private List<Trasa> listaTras;
  private Adapter<Trasa> adapter;
+ private OnClickListener deleteListener= new OnClickListener() {
+	
+	@Override
+	public void onClick(View v) {
+		int pos = (Integer) v.getTag();
+		DaoSession daoSession = DataBase.getInstance().getDaoSession();
+		List<Trasa> trasy = daoSession.getTrasaDao().queryBuilder().build().list();
+		if(trasy!=null && trasy.size()>0) {
+			Trasa trasaToDelete = trasy.get(pos);
+			daoSession.getTrasaDao().delete(trasaToDelete);
+			adapter.setList(daoSession.getTrasaDao().queryBuilder().build().list());
+			adapter.notifyDataSetChanged();
+		}
+		
+	}
+};
 	
 	 public static ListaTrasFragment newInstance(Date date) {
 		 ListaTrasFragment listaTrasFragment = new ListaTrasFragment();
@@ -40,7 +60,9 @@ public class ListaTrasFragment extends Fragment {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		this.date = (Date) getArguments().getSerializable(KalendarzActivity.CHOOSE_DATE);
-	}
+		setHasOptionsMenu(true);
+		setMenuVisibility(true);
+	 }
 	 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,7 +83,7 @@ public class ListaTrasFragment extends Fragment {
 			Log.e(TAG,t.getMiasta());
 		}
 		listView = (ListView) view.findViewById(R.id.listView);
-		adapter = new Adapter<Trasa>(listaTras,getActivity());
+		adapter = new Adapter<Trasa>(listaTras,getActivity(),deleteListener);
 		listView.setAdapter(adapter);
 	}
 }

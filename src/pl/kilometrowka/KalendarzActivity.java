@@ -9,27 +9,28 @@ import pl.kilometrowka.interfaces.ChangeFragment;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.FrameLayout;
 
 public class KalendarzActivity extends ActionBarActivity implements
 		OnClickListener, ChangeFragment {
 
+	public final String TAG = KalendarzActivity.class.getSimpleName();
 	public static final int KALENDARZ_FRAGMENT = 0;
 	public static final int LISTA_TRAS_FRAGMENT = 1;
 	public static final int DODAJ_TRASE_FRAGMENT = 2;
 	
 	public static String CHOOSE_DATE="CHOOSEDATE";
-
+	
+	OnClickListener deleteListener;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_kalendarz);
-
 		
 		if (savedInstanceState == null) {
 			FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -46,7 +47,7 @@ public class KalendarzActivity extends ActionBarActivity implements
 
 	@Override
 	public void onClick(View v) {
-
+		
 	}
 
 	@Override
@@ -82,7 +83,7 @@ public class KalendarzActivity extends ActionBarActivity implements
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
+		return false;
 	}
 
 	@Override
@@ -92,6 +93,12 @@ public class KalendarzActivity extends ActionBarActivity implements
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.action_settings) {
+			FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+			DodajTraseFragment dodajTraseFragment = new DodajTraseFragment();
+			ft.replace(R.id.kontener, dodajTraseFragment);
+			ft.addToBackStack("DODAJ_TRASE_FRAGMENT");
+			ft.commit();
+			
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
