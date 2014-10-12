@@ -16,5 +16,9 @@
     <string name="dokad">Dokąd:</string>
     <string name="iloscKm">Ilość kilometrów:</string>
     <string name="zapisz">Zapisz:</string>
+    <string name="prywatny">Slużbowy</string>
+    <string name="publiczny">Publiczny</string>
+    <string name="kierowca">Kierowca</string>
+    <string name="pasazer">Pasażer</string>
 
 </resources>

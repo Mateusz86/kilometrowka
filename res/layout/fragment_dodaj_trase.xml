@@ -2,105 +2,149 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="fill_horizontal" >
+    android:gravity="fill_horizontal"
+    android:orientation="vertical" >
 
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-         >
+        android:layout_height="wrap_content" >
 
         <TextView
             android:id="@+id/miejscowosc"
-            android:layout_marginTop="12dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
             android:text="@string/skad" />
 
         <EditText
+            android:id="@+id/skadEdt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:layout_toRightOf="@+id/miejscowosc" />
+            android:layout_toRightOf="@+id/miejscowosc"
+            android:lines="1" />
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-         android:layout_marginTop="5dp"
-         >
+        android:layout_marginTop="5dp" >
 
         <TextView
             android:id="@+id/dokad"
-            android:layout_marginTop="12dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
             android:text="@string/dokad" />
 
         <EditText
+            android:id="@+id/dokadEdt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:layout_toRightOf="@+id/dokad" />
+            android:layout_toRightOf="@+id/dokad"
+            android:lines="1" />
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-     android:layout_marginTop="5dp"
-         >
+        android:layout_marginTop="5dp" >
 
         <TextView
             android:id="@+id/km"
-            android:layout_marginTop="12dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
             android:text="@string/iloscKm" />
 
         <EditText
+            android:id="@+id/kmEdt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:layout_toRightOf="@+id/km" />
+            android:layout_toRightOf="@+id/km"
+            android:inputType="numberDecimal"
+            android:lines="1" />
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-       android:layout_marginTop="5dp" 
-        >
+        android:layout_marginTop="5dp" >
 
         <TextView
             android:id="@+id/samochod"
-            android:layout_marginTop="12dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
             android:text="@string/samochod" />
 
-        <EditText
+
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_toRightOf="@+id/samochod" />
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@+id/samochod"
+            android:orientation="horizontal" >
+
+            <CheckBox
+                android:id="@+id/prywatny"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/prywatny" />
+
+            <CheckBox
+                android:id="@+id/publiczny"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/publiczny" />
+        </LinearLayout>
     </RelativeLayout>
 
-    
-    <Button 
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp" >
+
+        <TextView
+            android:id="@+id/kier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@string/samochod"
+            android:visibility="invisible" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@+id/kier"
+            android:orientation="horizontal" >
+
+            <CheckBox
+                android:id="@+id/kierowca"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/kierowca" />
+
+            <CheckBox
+                android:id="@+id/pasazer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:text="@string/pasazer" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/zapisz"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        android:id="@+id/save"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/zapisz"
-        
-        />
-    
-    <TextView 
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="nie dziala jeszcze zapisywanie"
-        
-        />
-  
+        android:text="@string/zapisz" />
 
 </LinearLayout>
