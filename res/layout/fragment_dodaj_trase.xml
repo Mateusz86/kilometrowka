@@ -22,7 +22,9 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_toRightOf="@+id/miejscowosc"
-            android:lines="1" />
+            android:lines="1"
+            android:maxLines="1"
+            android:singleLine="true" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -43,7 +45,9 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_toRightOf="@+id/dokad"
-            android:lines="1" />
+            android:lines="1"
+            android:maxLines="1"
+            android:singleLine="true" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -65,7 +69,9 @@
             android:layout_marginLeft="5dp"
             android:layout_toRightOf="@+id/km"
             android:inputType="numberDecimal"
-            android:lines="1" />
+            android:lines="1"
+            android:maxLines="1"
+            android:singleLine="true" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -79,8 +85,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:text="@string/samochod" />
-
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -102,7 +106,6 @@
                 android:text="@string/publiczny" />
         </LinearLayout>
     </RelativeLayout>
-
 
     <RelativeLayout
         android:layout_width="wrap_content"

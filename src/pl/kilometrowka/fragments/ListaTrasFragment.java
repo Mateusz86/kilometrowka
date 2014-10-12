@@ -23,7 +23,7 @@ import android.widget.ListView;
 public class ListaTrasFragment extends Fragment {
 	
  public final String TAG =ListaTrasFragment.class.getSimpleName();	
- private Date date; 
+ public static Date date; 
  private ListView listView;
  private List<Trasa> listaTras;
  private Adapter<Trasa> adapter;
