@@ -3,8 +3,6 @@ package pl.kilometrowka.adapter;
 import java.util.List;
 
 import pl.kilometrowka.R;
-import pl.kilometrowka.dao.DaoSession;
-import pl.kilometrowka.dao.DataBase;
 import pl.kilometrowka.dao.Trasa;
 import android.content.Context;
 import android.view.LayoutInflater;

@@ -10,7 +10,6 @@ import pl.kilometrowka.dao.DaoSession;
 import pl.kilometrowka.dao.DataBase;
 import pl.kilometrowka.dao.Trasa;
 import pl.kilometrowka.utils.TrasaUtils;
-import android.hardware.Camera.Size;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -59,7 +58,7 @@ public class ListaTrasFragment extends Fragment {
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		this.date = (Date) getArguments().getSerializable(KalendarzActivity.CHOOSE_DATE);
+		ListaTrasFragment.date = (Date) getArguments().getSerializable(KalendarzActivity.CHOOSE_DATE);
 		setHasOptionsMenu(true);
 		setMenuVisibility(true);
 	 }
