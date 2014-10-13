@@ -1,27 +1,13 @@
 package pl.kilometrowka;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
-import org.apache.pdfbox.exceptions.COSVisitorException;
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.PDPage;
-
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
 
-
-
-
-
-
-
-/*public class RaportActivity extends ActionBarActivity implements OnClickListener {
+public class RaportActivity extends ActionBarActivity implements OnClickListener {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -55,82 +41,4 @@ import android.widget.TextView;
 		return super.onOptionsItemSelected(item);
 	}
 
-}*/
-
-public class RaportActivity extends ActionBarActivity {
-    EditText fname, fcontent, fnameread;
-    Button write, read;
-    TextView filecon;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_raport);
-        
-        try {
-			createPdf();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			Log.e("------dsfdsfdsf-------","-----asfasfdasdfasd--------- document exceppppsdsadasdasd");
-
-		} catch (COSVisitorException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-    }
-    
-    
-    
-    private void createPdf() throws IOException, COSVisitorException {
-        // TODO Auto-generated method stub
-       /* Document document = new Document();
-        
-        String fpath = "/sdcard/" + "tescik" + ".pdf";
-        File file = new File(fpath);
-        // If file does not exists, then create it
-        if (!file.exists()) {
-            file.createNewFile();
-        }
-
-        try {
-			PdfWriter.getInstance(document, new FileOutputStream(file.getAbsoluteFile()));
-			
-			document.open();
-			
-            document.add(new Paragraph("Hello World!"));
-            document.close();
-
-			
-		} catch (DocumentException e) {
-			Log.e("-------------","-------------- document exceppppsdsadasdasd");
-			e.printStackTrace();
-		}*/
-        
-    	PDDocument document = new PDDocument();
-
-    	// Create a new blank page and add it to the document
-    	PDPage blankPage = new PDPage();
-    	document.addPage( blankPage );
-
-    	
-    	   String fpath = "/sdcard/" + "tescikk" + ".pdf";
-           File file = new File(fpath);
-           // If file does not exists, then create it
-           if (!file.exists()) {
-               file.createNewFile();
-           }
-    	document.save(new FileOutputStream(file.getAbsoluteFile()));
-    	// Save the newly created document
-   // 	document.save("BlankPage.pdf");
-
-    	// finally make sure that the document is properly
-    	// closed.
-    	document.close();
-
-    	
-
-    }      
-    
 }
