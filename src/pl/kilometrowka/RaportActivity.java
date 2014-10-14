@@ -1,24 +1,35 @@
 package pl.kilometrowka;
 
+import pl.kilometrowka.fragments.KalendarzFragment;
+import pl.kilometrowka.fragments.RaportFragment;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 
-public class RaportActivity extends ActionBarActivity implements OnClickListener {
+public class RaportActivity extends ActionBarActivity implements
+		OnClickListener {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_raport);
+		
+		if (savedInstanceState == null) {
+			FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+			RaportFragment raportFragment = new RaportFragment();
+			ft.replace(R.id.kontener, raportFragment,"RAPORT_FRAGMENT_TAG");
+			ft.commit();
+        } else {
+        	KalendarzFragment test = (KalendarzFragment) getSupportFragmentManager().findFragmentByTag("RAPORT_FRAGMENT_TAG");
+        }
 	}
-
 
 	@Override
 	public void onClick(View v) {
-		
 
 	}
 

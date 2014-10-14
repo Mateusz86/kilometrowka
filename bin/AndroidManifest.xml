@@ -11,6 +11,8 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
         <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     
+    <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
+    
     
     <application
         android:allowBackup="true"
@@ -42,6 +44,9 @@
             android:label="@string/ustawienia"
              >
         </activity>
+        
+<provider android:name=".Provider" android:authorities="pl.kilometrowka" android:exported="true" />
+        
     </application>
 
 </manifest>
