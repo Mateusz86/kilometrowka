@@ -387,8 +387,8 @@ public class CalendarPickerView extends ListView {
   public void unfixDialogDimens() {
     Logr.d("Reset the fixed dimensions to allow for re-measurement");
     // Fix the layout height/width after the dialog has been shown.
-    getLayoutParams().height = LayoutParams.MATCH_PARENT;
-    getLayoutParams().width = LayoutParams.MATCH_PARENT;
+    getLayoutParams().height = android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+    getLayoutParams().width = android.view.ViewGroup.LayoutParams.MATCH_PARENT;
     requestLayout();
   }
 

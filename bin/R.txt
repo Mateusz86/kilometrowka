@@ -427,15 +427,9 @@ int string samochod 0x7f070019
 int string skad 0x7f07001c
 int string trasa 0x7f070017
 int string ustawienia 0x7f070013
-<<<<<<< HEAD
-int string zapisz 0x7f07001e
+int string zapisz 0x7f07001f
 int style AppBaseTheme 0x7f080087
 int style AppTheme 0x7f080088
-=======
-int string zapisz 0x7f07001f
-int style AppBaseTheme 0x7f08008f
-int style AppTheme 0x7f080090
->>>>>>> aa117b7b463281eccd8e9f3203da26e6e8ffc770
 int style CalendarCell 0x7f080001
 int style CalendarCell_CalendarDate 0x7f080003
 int style CalendarCell_DayHeader 0x7f080002
