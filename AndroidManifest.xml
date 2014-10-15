@@ -28,9 +28,7 @@
             android:name="pl.kilometrowka.KalendarzActivity"
             android:label="@string/kalendarz"
             android:windowSoftInputMode="adjustPan">
-<<<<<<< HEAD
-=======
-            >
+
              <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -38,7 +36,6 @@
             </intent-filter>
             
             
->>>>>>> aa117b7b463281eccd8e9f3203da26e6e8ffc770
         </activity>
         <activity
             android:name="pl.kilometrowka.RaportActivity"
