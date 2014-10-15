@@ -5,14 +5,15 @@
     <string name="kalendarz">Kalendarz</string>
     <string name="raport">Raport</string>
     <string name="ustawienia">Ustawienia</string>
-    <string name="action_settings">Dodaj Trase</string>
+    <string name="action_settings">Ustawienia</string>
+    <string name="action_raport">Generuj Raport</string>
     <string name="pokazListeTras">Pokaz Liste Tras</string>
     <string name="trasa">Trasa:</string>
     <string name="km">Przejechane KM:</string>
     <string name="samochod">Samochod:</string>
     <string name="data">Data:</string>
     <string name="delete">Delete:</string>
-    <string name="skad">Skąd:</string>
+    <string name="skad">Wpisz miasta:</string>
     <string name="dokad">Dokąd:</string>
     <string name="iloscKm">Ilość kilometrów:</string>
     <string name="zapisz">Zapisz:</string>
@@ -20,5 +21,5 @@
     <string name="publiczny">Publiczny</string>
     <string name="kierowca">Kierowca</string>
     <string name="pasazer">Pasażer</string>
-
+    <string name="addcity">Dodaj miasto</string>
 </resources>

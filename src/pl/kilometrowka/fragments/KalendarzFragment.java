@@ -29,8 +29,8 @@ public class KalendarzFragment extends Fragment implements OnClickListener {
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setHasOptionsMenu(false);
-		setMenuVisibility(false);
+	//	setHasOptionsMenu(false);
+	//	setMenuVisibility(false);
 		
 	}
 	

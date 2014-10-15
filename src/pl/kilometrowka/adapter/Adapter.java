@@ -3,7 +3,9 @@ package pl.kilometrowka.adapter;
 import java.util.List;
 
 import pl.kilometrowka.R;
+import pl.kilometrowka.core.AppSettings;
 import pl.kilometrowka.dao.Trasa;
+import pl.kilometrowka.utils.TrasaUtils;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -69,7 +71,7 @@ public class Adapter<T> extends BaseAdapter {
        Object object= list.get(position);
         
         if(object instanceof Trasa) {
-        	mViewHolder.trasa.setText(((Trasa)object).getMiasta());
+        	mViewHolder.trasa.setText(TrasaUtils.getMiastaByJson(((Trasa)object).getMiasta()));
         	mViewHolder.km.setText(((Trasa)object).getKm()+"");
         	if(((Trasa)object).getAutoSluzbowe()) {
         		mViewHolder.samochod.setText("Samochod sluzbowy");
@@ -78,7 +80,7 @@ public class Adapter<T> extends BaseAdapter {
         		mViewHolder.samochod.setText("Samochod prywatny");
         	}
         	
-        	mViewHolder.data.setText(((Trasa)object).getData().toString()+"");
+        	mViewHolder.data.setText(AppSettings.DATE_YMD_FORMAT.format(((Trasa)object).getData()));
         }
         
         mViewHolder.delete.setTag(position);

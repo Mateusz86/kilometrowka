@@ -5,9 +5,11 @@
     android:gravity="fill_horizontal"
     android:orientation="vertical" >
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/citywrapper" >
 
         <TextView
             android:id="@+id/miejscowosc"
@@ -25,14 +27,33 @@
             android:lines="1"
             android:maxLines="1"
             android:singleLine="true" />
-    </RelativeLayout>
+        <EditText
+            android:id="@+id/dokadEdt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/miejscowosc"
+            android:lines="1"
+            android:maxLines="1"
+            android:singleLine="true" />
+    </LinearLayout>
+    <LinearLayout android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <Button 
+            android:id="@+id/add_new_city"
+            android:layout_gravity="right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/addcity"/>
+    </LinearLayout>
 
-    <RelativeLayout
+    <!-->RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp" >
 
-        <TextView
+        <!TextView
             android:id="@+id/dokad"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -48,7 +69,7 @@
             android:lines="1"
             android:maxLines="1"
             android:singleLine="true" />
-    </RelativeLayout>
+    </RelativeLayout-->
 
     <RelativeLayout
         android:layout_width="wrap_content"

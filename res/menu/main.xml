@@ -10,6 +10,13 @@
         android:title="@string/action_settings"
         app:showAsAction="never"/>
     
-       
+     
+        <item
+        android:id="@+id/action_raport"
+        android:orderInCategory="100"
+         android:icon="@drawable/ic_launcher"
+        android:title="@string/action_raport"
+        app:showAsAction="never"/>
+    
 
 </menu>
