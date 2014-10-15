@@ -32,7 +32,6 @@
             android:name="pl.kilometrowka.KalendarzActivity"
             android:label="@string/kalendarz"
             android:windowSoftInputMode="adjustPan">
-            >
         </activity>
         <activity
             android:name="pl.kilometrowka.RaportActivity"
@@ -45,7 +44,7 @@
              >
         </activity>
         
-<provider android:name=".Provider" android:authorities="pl.kilometrowka" android:exported="true" />
+        <provider android:name=".Provider" android:authorities="pl.kilometrowka" android:exported="true" />
         
     </application>
 
