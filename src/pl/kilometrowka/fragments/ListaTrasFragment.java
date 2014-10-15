@@ -9,7 +9,9 @@ import pl.kilometrowka.adapter.Adapter;
 import pl.kilometrowka.dao.DaoSession;
 import pl.kilometrowka.dao.DataBase;
 import pl.kilometrowka.dao.Trasa;
+import pl.kilometrowka.interfaces.ChangeFragment;
 import pl.kilometrowka.utils.TrasaUtils;
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -17,15 +19,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 
-public class ListaTrasFragment extends Fragment {
+public class ListaTrasFragment extends Fragment implements OnClickListener{
 	
  public final String TAG =ListaTrasFragment.class.getSimpleName();	
  public static Date date; 
  private ListView listView;
  private List<Trasa> listaTras;
  private Adapter<Trasa> adapter;
+ private Button dodajTrase;
+ ChangeFragment changeFragmentListener;
+ 
  private OnClickListener deleteListener= new OnClickListener() {
 	
 	@Override
@@ -77,12 +83,43 @@ public class ListaTrasFragment extends Fragment {
 
 
 	private void setUpViews(View view) {
-		listaTras=TrasaUtils.getDrasyFromDate(date);
+		listaTras=TrasaUtils.getTrasyFromDate(date);
+		dodajTrase = (Button) view.findViewById(R.id.dodajTrase);
+		dodajTrase.setOnClickListener(this);
 		for(Trasa t:listaTras) {
 			Log.e(TAG,t.getMiasta());
 		}
 		listView = (ListView) view.findViewById(R.id.listView);
 		adapter = new Adapter<Trasa>(listaTras,getActivity(),deleteListener);
 		listView.setAdapter(adapter);
+	}
+
+	
+	@Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        
+        // This makes sure that the container activity has implemented
+        // the callback interface. If not, it throws an exception
+        try {
+        	changeFragmentListener = (ChangeFragment) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement ChangeFragment");
+        }
+    }
+	
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.dodajTrase:
+			changeFragmentListener.changeFragment(KalendarzActivity.DODAJ_TRASE_FRAGMENT, date);
+			
+			break;
+
+		default:
+			break;
+		}
 	}
 }

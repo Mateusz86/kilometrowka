@@ -1,5 +1,10 @@
 package pl.kilometrowka.fragments;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.json.JSONArray;
+
 import pl.kilometrowka.R;
 import pl.kilometrowka.dao.DaoSession;
 import pl.kilometrowka.dao.DataBase;
@@ -15,6 +20,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 public class DodajTraseFragment extends Fragment implements OnClickListener {
@@ -27,7 +33,11 @@ public class DodajTraseFragment extends Fragment implements OnClickListener {
 	private CheckBox kierowca;
 	private CheckBox pasazer;
 	private Button zapisz;
-
+    private Button addCity;
+//    private LinearLayout root;
+    private LinearLayout root;
+    private List<EditText> citis;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -43,17 +53,38 @@ public class DodajTraseFragment extends Fragment implements OnClickListener {
 	}
 
 	private void setUpViews(View view) {
+		
+		this.citis = new ArrayList<EditText>();
+		
 		this.skad = (EditText) view.findViewById(R.id.skadEdt);
+		citis.add(skad);
 		this.dokad = (EditText) view.findViewById(R.id.dokadEdt);
+		citis.add(dokad);
 		this.km = (EditText) view.findViewById(R.id.kmEdt);
 		this.samochodPrywatny = (CheckBox) view.findViewById(R.id.prywatny);
 		this.samochodPubliczny = (CheckBox) view.findViewById(R.id.publiczny);
 		this.kierowca = (CheckBox) view.findViewById(R.id.kierowca);
 		this.pasazer = (CheckBox) view.findViewById(R.id.pasazer);
 		this.zapisz = (Button) view.findViewById(R.id.zapisz);
+		this.root = (LinearLayout) view.findViewById(R.id.citywrapper);
 		
 		samochodPrywatny.setChecked(true);
 		kierowca.setChecked(true);
+		
+		this.addCity = (Button) view.findViewById(R.id.add_new_city);
+		
+		this.addCity.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				EditText vlEdit = new EditText(getActivity());
+				vlEdit.requestFocus();
+				
+				root.addView(vlEdit);
+				citis.add(vlEdit);
+			}
+		});
 
 	}
 
@@ -102,7 +133,7 @@ public class DodajTraseFragment extends Fragment implements OnClickListener {
 	private void zapiszTrase() {
 		
 		
-		if(skad.getEditableText().toString().trim().length()>0&&skad.getEditableText().toString()!=null && skad.getEditableText().toString()!="" && skad.getEditableText().toString().length()>0)
+		/*if(skad.getEditableText().toString().trim().length()>0&&skad.getEditableText().toString()!=null && skad.getEditableText().toString()!="" && skad.getEditableText().toString().length()>0)
 		{
 			
 		}
@@ -116,7 +147,7 @@ public class DodajTraseFragment extends Fragment implements OnClickListener {
 		}
 		else {
 			showToast("Prosz« uzupe¸ni pole Dokˆd");
-		}
+		}*/
 		
 		if(km.getEditableText().toString().trim().length()>0&&km.getEditableText().toString()!=null && km.getEditableText().toString()!="" && km.getEditableText().toString().length()>0)
 		{
@@ -126,12 +157,17 @@ public class DodajTraseFragment extends Fragment implements OnClickListener {
 			showToast("Prosz« uzupe¸ni pole Km");
 		}
 		
-	if(skad.getEditableText().toString().trim().length()>0 &&dokad.getEditableText().toString().trim().length()>0 && km.getEditableText().toString().trim().length()>0)	
+	if( km.getEditableText().toString().trim().length()>0)	
 		{
 		Trasa trasa = new Trasa();
-		StringBuilder miasto = new StringBuilder(skad.getEditableText().toString());
-		miasto.append(" - " +dokad.getEditableText().toString());
-		trasa.setMiasta(miasto.toString());
+
+		JSONArray jsMiasta = new JSONArray();
+		for(EditText city:citis){
+			jsMiasta.put(city.getEditableText().toString());
+		}
+		
+		
+		trasa.setMiasta(jsMiasta.toString());
 		trasa.setKm(Double.valueOf(km.getEditableText().toString()));
 		
 		if(samochodPrywatny.isChecked()) {

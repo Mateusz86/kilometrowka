@@ -1,14 +1,23 @@
 package pl.kilometrowka;
 
+import java.text.ParseException;
 import java.util.Date;
+import java.util.List;
 
+import pl.kilometrowka.core.AppSettings;
+import pl.kilometrowka.dao.DaoSession;
+import pl.kilometrowka.dao.DataBase;
+import pl.kilometrowka.dao.Trasa;
+import pl.kilometrowka.dao.TrasaDao;
 import pl.kilometrowka.fragments.DodajTraseFragment;
 import pl.kilometrowka.fragments.KalendarzFragment;
 import pl.kilometrowka.fragments.ListaTrasFragment;
 import pl.kilometrowka.interfaces.ChangeFragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,6 +39,47 @@ public class KalendarzActivity extends ActionBarActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_kalendarz);
+		
+		
+		
+		
+		AppSettings.setContext(this);
+
+		// test bazy danych
+		DaoSession daoSession = DataBase.getInstance().getDaoSession();
+		daoSession.getTrasaDao().deleteAll();
+		daoSession.getStawkiKierowcyDao().deleteAll();
+		daoSession.getStawkiPasazeraDao().deleteAll();
+		
+		TrasaDao trasaDao = daoSession.getTrasaDao();
+
+		Trasa trasa = new Trasa();
+		trasa.setMiasta("Krak—w,Katowice");
+		trasa.setKm(new Double(23.0));
+		trasa.setKierowca(true);
+		trasa.setAutoSluzbowe(true);
+		
+		String dateString =AppSettings.DATE_YMD_FORMAT.format(new Date());
+		try {
+		Date dataTemp=AppSettings.DATE_YMD_FORMAT.parse(dateString);
+		trasa.setData(dataTemp);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+
+		trasaDao.insert(trasa);
+
+		List<Trasa> trasy = trasaDao.queryBuilder().build().list();
+		System.out.println("trasy");
+		System.out.println(trasy);
+		Log.e(TAG,trasy.get(0).getData()+"");
+		
+		
+		
+		
 		
 		if (savedInstanceState == null) {
 			FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -82,7 +132,7 @@ public class KalendarzActivity extends ActionBarActivity implements
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.main, menu);
-		return false;
+		return true;
 	}
 
 	@Override
@@ -91,15 +141,20 @@ public class KalendarzActivity extends ActionBarActivity implements
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
+		
 		if (id == R.id.action_settings) {
-			FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-			DodajTraseFragment dodajTraseFragment = new DodajTraseFragment();
-			ft.replace(R.id.kontener, dodajTraseFragment);
-			ft.addToBackStack("DODAJ_TRASE_FRAGMENT");
-			ft.commit();
+			Intent intent = new Intent(getApplicationContext(), UstawieniaActivity.class);
+			startActivity(intent);
 			
 			return true;
 		}
+		if(id==R.id.action_raport) {
+			Intent intent = new Intent(getApplicationContext(), RaportActivity.class);
+			startActivity(intent);
+			
+			return true;
+		}
+		
 		return super.onOptionsItemSelected(item);
 	}
 
