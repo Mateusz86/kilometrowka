@@ -7,15 +7,21 @@ import pl.kilometrowka.KalendarzActivity;
 import pl.kilometrowka.R;
 import pl.kilometrowka.interfaces.ChangeFragment;
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.timessquare.CalendarPickerView;
+import com.squareup.timessquare.CalendarPickerView.OnDateSelectedListener;
 import com.squareup.timessquare.CalendarPickerView.SelectionMode;
 
 public class KalendarzFragment extends Fragment implements OnClickListener {
@@ -67,7 +73,22 @@ public class KalendarzFragment extends Fragment implements OnClickListener {
 		calendar.init(lastYear.getTime(), nextYear.getTime()) //
 				.inMode(SelectionMode.SINGLE) //
 		 .withSelectedDate(new Date());
-
+		
+		calendar.setOnDateSelectedListener(new OnDateSelectedListener() {
+			
+			@Override
+			public void onDateUnselected(Date date) {
+				// TODO Auto-generated method stub
+				Toast.makeText(getActivity(),"a-"+date.toString(), Toast.LENGTH_SHORT).show();
+			}
+			
+			@Override
+			public void onDateSelected(Date date) {
+				// TODO Auto-generated method stub
+				Toast.makeText(getActivity(),"b-"+date.toString(), Toast.LENGTH_SHORT).show();
+				
+			}
+		});
 	}
 
 	private void setUpListeners() {

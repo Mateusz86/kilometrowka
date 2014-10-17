@@ -13,6 +13,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 
@@ -62,7 +63,7 @@ public class Adapter<T> extends BaseAdapter {
             mViewHolder.km= (TextView) row.findViewById(R.id.km);
             mViewHolder.samochod= (TextView) row.findViewById(R.id.samochod);
             mViewHolder.data= (TextView) row.findViewById(R.id.data);
-            mViewHolder.delete= (Button) row.findViewById(R.id.delete);
+            mViewHolder.delete= (ImageButton) row.findViewById(R.id.delete);
             row.setTag(mViewHolder);
         } else {
             mViewHolder = (MyViewHolder) row.getTag();
@@ -92,7 +93,7 @@ public class Adapter<T> extends BaseAdapter {
 	
 	private class MyViewHolder {
         TextView trasa,km,data,samochod,kierowca;
-        Button delete;
+        ImageButton delete;
     }
 
 

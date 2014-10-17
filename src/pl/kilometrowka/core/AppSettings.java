@@ -12,6 +12,10 @@ public final class AppSettings {
 	
 	private static Context context;
 	public static String MIASTA_DELIMER = ",";
+	
+	
+	// fonts
+	public static final String FONT_LATO_NORMAL = "fonts/RobotoRegular.ttf";
 
 
 	public static Context getContext() {

@@ -92,6 +92,7 @@ public class ListaTrasFragment extends Fragment implements OnClickListener{
 		listView = (ListView) view.findViewById(R.id.listView);
 		adapter = new Adapter<Trasa>(listaTras,getActivity(),deleteListener);
 		listView.setAdapter(adapter);
+		
 	}
 
 	

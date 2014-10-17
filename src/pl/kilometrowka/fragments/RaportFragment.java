@@ -66,7 +66,7 @@ public class RaportFragment extends Fragment implements OnClickListener {
 		} else {
 			String mTime = "" + Calendar.getInstance().getTimeInMillis();
 		}
-
+	
 		return view;
 	}
 

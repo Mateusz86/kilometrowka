@@ -11,7 +11,7 @@
         android:orientation="vertical"
         android:id="@+id/citywrapper" >
 
-        <TextView
+        <pl.kilometrowka.components.ExTextView
             android:id="@+id/miejscowosc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -53,7 +53,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp" >
 
-        <!TextView
+        <!pl.kilometrowka.components.ExTextView
             android:id="@+id/dokad"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -76,7 +76,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp" >
 
-        <TextView
+        <pl.kilometrowka.components.ExTextView
             android:id="@+id/km"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -89,7 +89,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_toRightOf="@+id/km"
-            android:inputType="numberDecimal"
+            android:inputType="number"
             android:lines="1"
             android:maxLines="1"
             android:singleLine="true" />
@@ -100,7 +100,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp" >
 
-        <TextView
+        <pl.kilometrowka.components.ExTextView
             android:id="@+id/samochod"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -133,7 +133,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp" >
 
-        <TextView
+        <pl.kilometrowka.components.ExTextView
             android:id="@+id/kier"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
