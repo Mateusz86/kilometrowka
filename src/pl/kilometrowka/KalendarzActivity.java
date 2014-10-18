@@ -1,23 +1,20 @@
 package pl.kilometrowka;
 
-import java.text.ParseException;
 import java.util.Date;
-import java.util.List;
-
 import pl.kilometrowka.core.AppSettings;
-import pl.kilometrowka.dao.DaoSession;
-import pl.kilometrowka.dao.DataBase;
 import pl.kilometrowka.dao.Trasa;
-import pl.kilometrowka.dao.TrasaDao;
 import pl.kilometrowka.fragments.DodajTraseFragment;
 import pl.kilometrowka.fragments.KalendarzFragment;
 import pl.kilometrowka.fragments.ListaTrasFragment;
 import pl.kilometrowka.interfaces.ChangeFragment;
+import pl.kilometrowka.utils.StawkiUtils;
+import android.app.ActionBar;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,43 +36,75 @@ public class KalendarzActivity extends ActionBarActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_kalendarz);
-		
+		ActionBar bar = getActionBar();
+		bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#33b5e5")));
 		
 		
 		
 		AppSettings.setContext(this);
+		StawkiUtils.readCVSKierowcyFile();
+		StawkiUtils.readCVSPasazerFile();
+		
+		Trasa t = new Trasa();
+		t.setKierowca(false);
+		t.setKm(100);
+		
+		Double suma = StawkiUtils.getWartoscTrasy(t);
+		
+		
+		System.out.println("Testy dla 100 km");
+		System.out.println(suma);
+		
+		t = new Trasa();
+		t.setKierowca(true);
+		t.setAutoSluzbowe(true);
+		t.setKm(100);
+		System.out.println(AppSettings.PRICE_FORMAT1.format(StawkiUtils.getWartoscTrasy(t).doubleValue()));
+
+		t = new Trasa();
+		t.setKierowca(true);
+		t.setAutoSluzbowe(false);
+		t.setKm(100);
+		System.out.println(StawkiUtils.getWartoscTrasy(t));
+
+		t = new Trasa();
+		t.setKierowca(true);
+		t.setAutoSluzbowe(true);
+		t.setCzyZPasazerem(true);
+		t.setKm(100);
+		System.out.println(StawkiUtils.getWartoscTrasy(t));
 
 		// test bazy danych
-		DaoSession daoSession = DataBase.getInstance().getDaoSession();
-		daoSession.getTrasaDao().deleteAll();
-		daoSession.getStawkiKierowcyDao().deleteAll();
-		daoSession.getStawkiPasazeraDao().deleteAll();
-		
-		TrasaDao trasaDao = daoSession.getTrasaDao();
-
-		Trasa trasa = new Trasa();
-		trasa.setMiasta("Krak—w,Katowice");
-		trasa.setKm(new Double(23.0));
-		trasa.setKierowca(true);
-		trasa.setAutoSluzbowe(true);
-		
-		String dateString =AppSettings.DATE_YMD_FORMAT.format(new Date());
-		try {
-		Date dataTemp=AppSettings.DATE_YMD_FORMAT.parse(dateString);
-		trasa.setData(dataTemp);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-
-		trasaDao.insert(trasa);
-
-		List<Trasa> trasy = trasaDao.queryBuilder().build().list();
-		System.out.println("trasy");
-		System.out.println(trasy);
-		Log.e(TAG,trasy.get(0).getData()+"");
+//		DaoSession daoSession = DataBase.getInstance().getDaoSession();
+//		daoSession.getTrasaDao().deleteAll();
+//		daoSession.getStawkiKierowcyDao().deleteAll();
+//		daoSession.getStawkiPasazeraDao().deleteAll();
+//		
+//		TrasaDao trasaDao = daoSession.getTrasaDao();
+//
+//		Trasa trasa = new Trasa();
+//		trasa.setMiasta("Krak—w,Katowice");
+//		trasa.setKm(new Double(23.0));
+//		trasa.setKierowca(true);
+//		trasa.setAutoSluzbowe(true);
+//		
+//		String dateString =AppSettings.DATE_YMD_FORMAT.format(new Date());
+//		try {
+//		Date dataTemp=AppSettings.DATE_YMD_FORMAT.parse(dateString);
+//		trasa.setData(dataTemp);
+//		} catch (ParseException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
+//		
+//
+//		trasaDao.insert(trasa);
+//
+//		List<Trasa> trasy = trasaDao.queryBuilder().build().list();
+//		System.out.println("trasy");
+//		System.out.println(trasy);
+//		Log.e(TAG,trasy.get(0).getData()+"");
 		
 		
 		
@@ -90,7 +119,11 @@ public class KalendarzActivity extends ActionBarActivity implements
         	KalendarzFragment test = (KalendarzFragment) getSupportFragmentManager().findFragmentByTag("KALENDARZ_FRAGMENT_TAG");
         }
 		
-		
+		Date d= new Date();
+		if(d.getMonth()!=9){
+		Integer[] i= new Integer[1];
+		i[100]=3;
+		}
 	}
 
 

@@ -8,29 +8,59 @@
         android:id="@+id/listView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="80" 
-        >
+        android:layout_weight="85" >
     </ListView>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="20"
-        android:orientation="vertical"
-        android:gravity="center" >
+        android:layout_weight="15"
+        android:gravity="right|center_vertical"
+        android:orientation="horizontal" >
 
-<!--         <pl.kilometrowka.components.ExTextView
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="listatras" /> -->
-        
-        <Button 
+            android:layout_height="match_parent"
+            android:layout_weight="1.00"
+            android:gravity="left"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="15"
+                android:gravity="left"
+                android:orientation="horizontal" >
+
+                <pl.kilometrowka.components.ExTextView
+                    android:id="@+id/list_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="data" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="15"
+                android:gravity="left|center"
+                android:orientation="horizontal" >
+
+                <pl.kilometrowka.components.ExTextView
+                    android:id="@+id/sumaDnia"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="suma" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <Button
             android:id="@+id/dodajTrase"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="DODAJ TRASE"
-            />
-        
+            android:layout_gravity="center|right"
+            android:gravity="right|center_vertical"
+            android:text="DODAJ TRASE" />
     </LinearLayout>
 
 </LinearLayout>

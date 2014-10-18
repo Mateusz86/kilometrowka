@@ -8,9 +8,10 @@ public class Trasa {
 
     private Long id;
     private String miasta;
-    private Double km;
+    private Integer km;
     private Boolean kierowca;
     private Boolean autoSluzbowe;
+    private Boolean czyZPasazerem;
     private java.util.Date data;
 
     public Trasa() {
@@ -20,12 +21,13 @@ public class Trasa {
         this.id = id;
     }
 
-    public Trasa(Long id, String miasta, Double km, Boolean kierowca, Boolean autoSluzbowe, java.util.Date data) {
+    public Trasa(Long id, String miasta, Integer km, Boolean kierowca, Boolean autoSluzbowe, Boolean czyZPasazerem, java.util.Date data) {
         this.id = id;
         this.miasta = miasta;
         this.km = km;
         this.kierowca = kierowca;
         this.autoSluzbowe = autoSluzbowe;
+        this.czyZPasazerem = czyZPasazerem;
         this.data = data;
     }
 
@@ -45,11 +47,11 @@ public class Trasa {
         this.miasta = miasta;
     }
 
-    public Double getKm() {
+    public Integer getKm() {
         return km;
     }
 
-    public void setKm(Double km) {
+    public void setKm(Integer km) {
         this.km = km;
     }
 
@@ -67,6 +69,14 @@ public class Trasa {
 
     public void setAutoSluzbowe(Boolean autoSluzbowe) {
         this.autoSluzbowe = autoSluzbowe;
+    }
+
+    public Boolean getCzyZPasazerem() {
+        return czyZPasazerem;
+    }
+
+    public void setCzyZPasazerem(Boolean czyZPasazerem) {
+        this.czyZPasazerem = czyZPasazerem;
     }
 
     public java.util.Date getData() {

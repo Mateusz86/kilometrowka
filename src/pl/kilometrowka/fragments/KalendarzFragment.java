@@ -64,6 +64,7 @@ public class KalendarzFragment extends Fragment implements OnClickListener {
 		calendar = (CalendarPickerView) view.findViewById(R.id.calendar_view);
 		showListTrace = (Button) view.findViewById(R.id.pokazListeTras);
 
+		
 		final Calendar nextYear = Calendar.getInstance();
 		nextYear.add(Calendar.YEAR, 1);
 

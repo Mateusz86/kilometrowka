@@ -25,10 +25,11 @@ public class TrasaDao extends AbstractDao<Trasa, Long> {
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property Miasta = new Property(1, String.class, "miasta", false, "MIASTA");
-        public final static Property Km = new Property(2, Double.class, "km", false, "KM");
+        public final static Property Km = new Property(2, Integer.class, "km", false, "KM");
         public final static Property Kierowca = new Property(3, Boolean.class, "kierowca", false, "KIEROWCA");
         public final static Property AutoSluzbowe = new Property(4, Boolean.class, "autoSluzbowe", false, "AUTO_SLUZBOWE");
-        public final static Property Data = new Property(5, java.util.Date.class, "data", false, "DATA");
+        public final static Property CzyZPasazerem = new Property(5, Boolean.class, "czyZPasazerem", false, "CZY_ZPASAZEREM");
+        public final static Property Data = new Property(6, java.util.Date.class, "data", false, "DATA");
     };
 
 
@@ -46,10 +47,11 @@ public class TrasaDao extends AbstractDao<Trasa, Long> {
         db.execSQL("CREATE TABLE " + constraint + "'TRASA' (" + //
                 "'_id' INTEGER PRIMARY KEY ," + // 0: id
                 "'MIASTA' TEXT," + // 1: miasta
-                "'KM' REAL," + // 2: km
+                "'KM' INTEGER," + // 2: km
                 "'KIEROWCA' INTEGER," + // 3: kierowca
                 "'AUTO_SLUZBOWE' INTEGER," + // 4: autoSluzbowe
-                "'DATA' INTEGER);"); // 5: data
+                "'CZY_ZPASAZEREM' INTEGER," + // 5: czyZPasazerem
+                "'DATA' INTEGER);"); // 6: data
     }
 
     /** Drops the underlying database table. */
@@ -73,9 +75,9 @@ public class TrasaDao extends AbstractDao<Trasa, Long> {
             stmt.bindString(2, miasta);
         }
  
-        Double km = entity.getKm();
+        Integer km = entity.getKm();
         if (km != null) {
-            stmt.bindDouble(3, km);
+            stmt.bindLong(3, km);
         }
  
         Boolean kierowca = entity.getKierowca();
@@ -88,9 +90,14 @@ public class TrasaDao extends AbstractDao<Trasa, Long> {
             stmt.bindLong(5, autoSluzbowe ? 1l: 0l);
         }
  
+        Boolean czyZPasazerem = entity.getCzyZPasazerem();
+        if (czyZPasazerem != null) {
+            stmt.bindLong(6, czyZPasazerem ? 1l: 0l);
+        }
+ 
         java.util.Date data = entity.getData();
         if (data != null) {
-            stmt.bindLong(6, data.getTime());
+            stmt.bindLong(7, data.getTime());
         }
     }
 
@@ -106,10 +113,11 @@ public class TrasaDao extends AbstractDao<Trasa, Long> {
         Trasa entity = new Trasa( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // miasta
-            cursor.isNull(offset + 2) ? null : cursor.getDouble(offset + 2), // km
+            cursor.isNull(offset + 2) ? null : cursor.getInt(offset + 2), // km
             cursor.isNull(offset + 3) ? null : cursor.getShort(offset + 3) != 0, // kierowca
             cursor.isNull(offset + 4) ? null : cursor.getShort(offset + 4) != 0, // autoSluzbowe
-            cursor.isNull(offset + 5) ? null : new java.util.Date(cursor.getLong(offset + 5)) // data
+            cursor.isNull(offset + 5) ? null : cursor.getShort(offset + 5) != 0, // czyZPasazerem
+            cursor.isNull(offset + 6) ? null : new java.util.Date(cursor.getLong(offset + 6)) // data
         );
         return entity;
     }
@@ -119,10 +127,11 @@ public class TrasaDao extends AbstractDao<Trasa, Long> {
     public void readEntity(Cursor cursor, Trasa entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setMiasta(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
-        entity.setKm(cursor.isNull(offset + 2) ? null : cursor.getDouble(offset + 2));
+        entity.setKm(cursor.isNull(offset + 2) ? null : cursor.getInt(offset + 2));
         entity.setKierowca(cursor.isNull(offset + 3) ? null : cursor.getShort(offset + 3) != 0);
         entity.setAutoSluzbowe(cursor.isNull(offset + 4) ? null : cursor.getShort(offset + 4) != 0);
-        entity.setData(cursor.isNull(offset + 5) ? null : new java.util.Date(cursor.getLong(offset + 5)));
+        entity.setCzyZPasazerem(cursor.isNull(offset + 5) ? null : cursor.getShort(offset + 5) != 0);
+        entity.setData(cursor.isNull(offset + 6) ? null : new java.util.Date(cursor.getLong(offset + 6)));
      }
     
     /** @inheritdoc */

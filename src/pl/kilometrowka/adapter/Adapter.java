@@ -5,6 +5,7 @@ import java.util.List;
 import pl.kilometrowka.R;
 import pl.kilometrowka.core.AppSettings;
 import pl.kilometrowka.dao.Trasa;
+import pl.kilometrowka.utils.StawkiUtils;
 import pl.kilometrowka.utils.TrasaUtils;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -62,7 +63,7 @@ public class Adapter<T> extends BaseAdapter {
             mViewHolder.trasa= (TextView) row.findViewById(R.id.trasaa);
             mViewHolder.km= (TextView) row.findViewById(R.id.km);
             mViewHolder.samochod= (TextView) row.findViewById(R.id.samochod);
-            mViewHolder.data= (TextView) row.findViewById(R.id.data);
+         //   mViewHolder.data= (TextView) row.findViewById(R.id.data);
             mViewHolder.delete= (ImageButton) row.findViewById(R.id.delete);
             row.setTag(mViewHolder);
         } else {
@@ -72,16 +73,31 @@ public class Adapter<T> extends BaseAdapter {
        Object object= list.get(position);
         
         if(object instanceof Trasa) {
-        	mViewHolder.trasa.setText(TrasaUtils.getMiastaByJson(((Trasa)object).getMiasta()));
-        	mViewHolder.km.setText(((Trasa)object).getKm()+"");
-        	if(((Trasa)object).getAutoSluzbowe()) {
-        		mViewHolder.samochod.setText("Samochod sluzbowy");
-        	}
-        	else {
-        		mViewHolder.samochod.setText("Samochod prywatny");
+        	Trasa trasa = (Trasa)object;
+        	mViewHolder.trasa.setText(TrasaUtils.getMiastaByJson(trasa.getMiasta()));
+        	mViewHolder.km.setText(((Trasa)object).getKm()+" km" + " = "+AppSettings.PRICE_FORMAT1.format(StawkiUtils.getWartoscTrasy(trasa).doubleValue())+"€");
+        	boolean isKierowca = ((Trasa)object).getKierowca();
+        	
+        	boolean isSluzbowe =((Trasa)object).getAutoSluzbowe();
+        	boolean czyZPasazerem =((Trasa)object).getCzyZPasazerem();
+        	
+        
+        	if(isKierowca){
+        		String samochod= AppSettings.SAMOCHOD_PRYWATNY;
+        		if(isSluzbowe) {
+        			samochod =AppSettings.SAMOCHOD_SLUZBOWY;
+            	}
+        		if(czyZPasazerem){
+        			samochod += AppSettings.Z_PASAZEREM;
+        		}
+        		mViewHolder.samochod.setText(samochod);
+        	}else{
+        		mViewHolder.samochod.setText(AppSettings.PASAZER);
         	}
         	
-        	mViewHolder.data.setText(AppSettings.DATE_YMD_FORMAT.format(((Trasa)object).getData()));
+        	
+        	
+        	//mViewHolder.data.setText(AppSettings.DATE_YMD_FORMAT.format(((Trasa)object).getData()));
         }
         
         mViewHolder.delete.setTag(position);
@@ -92,7 +108,7 @@ public class Adapter<T> extends BaseAdapter {
 
 	
 	private class MyViewHolder {
-        TextView trasa,km,data,samochod,kierowca;
+        TextView trasa,km,samochod,kierowca;
         ImageButton delete;
     }
 

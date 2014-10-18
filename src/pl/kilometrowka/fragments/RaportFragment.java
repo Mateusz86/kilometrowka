@@ -1,13 +1,25 @@
 package pl.kilometrowka.fragments;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import pl.kilometrowka.R;
+import pl.kilometrowka.core.AppSettings;
+import pl.kilometrowka.dao.DaoSession;
+import pl.kilometrowka.dao.DataBase;
+import pl.kilometrowka.dao.Trasa;
+import pl.kilometrowka.dao.TrasaDao;
+import pl.kilometrowka.dao.TrasaDao.Properties;
+import pl.kilometrowka.utils.StawkiUtils;
+import pl.kilometrowka.utils.TrasaUtils;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,20 +30,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.Toast;
 
-import com.pdfjet.A4;
-import com.pdfjet.Box;
-import com.pdfjet.Cell;
-import com.pdfjet.Color;
-import com.pdfjet.CoreFont;
-import com.pdfjet.Font;
-import com.pdfjet.Image;
-import com.pdfjet.ImageType;
-import com.pdfjet.PDF;
-import com.pdfjet.Page;
-import com.pdfjet.Table;
-import com.pdfjet.TextLine;
+import com.pdfjet.*;
 
 public class RaportFragment extends Fragment implements OnClickListener {
 
@@ -41,7 +43,8 @@ public class RaportFragment extends Fragment implements OnClickListener {
 	private Button pokazPdf;
 	private Button generujPdfPamiec;
 	private Button pokazPdfPamiec;
-	
+	private DatePicker date1, date2;
+
 	private String file = "mydata.pdf";
 
 	@Override
@@ -66,15 +69,23 @@ public class RaportFragment extends Fragment implements OnClickListener {
 		} else {
 			String mTime = "" + Calendar.getInstance().getTimeInMillis();
 		}
-	
+
 		return view;
 	}
 
 	private void setUpViews(View view) {
 		generujPdf = (Button) view.findViewById(R.id.generuj_pdf);
 		pokazPdf = (Button) view.findViewById(R.id.pokaz_pdf);
-		generujPdfPamiec= (Button) view.findViewById(R.id.generuj_pdf_w_pamieci);
+		generujPdfPamiec = (Button) view
+				.findViewById(R.id.generuj_pdf_w_pamieci);
 		pokazPdfPamiec = (Button) view.findViewById(R.id.pokaz_pdf_z_pamieci);
+		date1 = (DatePicker) view.findViewById(R.id.datePicker1);
+		Calendar cal = Calendar.getInstance();
+		int year = cal.get(Calendar.YEAR);
+		int month = cal.get(Calendar.MONTH);
+		int day = cal.get(Calendar.DAY_OF_MONTH);
+		date1.updateDate(year, month, day - 7);
+		date2 = (DatePicker) view.findViewById(R.id.datePicker2);
 
 	}
 
@@ -109,8 +120,6 @@ public class RaportFragment extends Fragment implements OnClickListener {
 
 	}
 
-
-
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
@@ -134,21 +143,17 @@ public class RaportFragment extends Fragment implements OnClickListener {
 
 	private void createPdf() {
 
-		/*
-		 * String fpath = "/sdcard/" + "tescikk" + ".pdf"; File file = new
-		 * File(fpath); // If file does not exists, then create it if
-		 * (!file.exists()) { file.createNewFile(); }
-		 */
+		
 
 		FileOutputStream fos = null;
 		try {
-			// fos = new FileOutputStream("/sdcard/sample.pdf");
+			
 			fos = new FileOutputStream("/sdcard/sampleee.pdf");
 			PDF pdf = new PDF(fos);
 			pdf.setTitle("TYTULLL");
-			
-			InputStream f = getActivity().getAssets().open("img.jpg");
-			Image image = new Image(pdf, f, ImageType.JPG);
+
+			InputStream f = getActivity().getAssets().open("ic_launcher.png");
+			Image image = new Image(pdf, f, ImageType.PNG);
 			Page page = new Page(pdf, A4.PORTRAIT);
 			image.setPosition(0, 0);
 			image.drawOn(page);
@@ -160,138 +165,189 @@ public class RaportFragment extends Fragment implements OnClickListener {
 			 */
 
 			Font f1 = new Font(pdf, CoreFont.HELVETICA_BOLD);
+			
 
 			TextLine text = new TextLine(f1);
 
-			text = new TextLine(f1, "Przykladowy tekst");
-			text.setPosition(70.0, 50.0);
-			text.drawOn(page);
-
-			f1.setSize(14.0);
-			String unicode = "\u20AC\u0020\u201A\u0192\u201E\u2026\u2020\u2021\u02C6\u2030\u0160";
-			text = new TextLine(f1, unicode);
-			text.setPosition(100.0, 700.0);
-			text.setColor(Color.blue);
-			text.drawOn(page);
-
+			
 			Font f2 = new Font(pdf, CoreFont.HELVETICA);
 			f1.setSize(7.0f);
-				
-			TextLine title = new TextLine(f1, "Laporan Penjualan Pulsa");
+			int month1 = date1.getMonth() + 1;
+			Date d1 = AppSettings.DATE_YMD_FORMAT.parse(date1.getDayOfMonth()
+					+ "-" + month1 + "-" + date1.getYear());
+			int month2 = date2.getMonth() + 1;
+			Date d2 = AppSettings.DATE_YMD_FORMAT.parse(date2.getDayOfMonth()
+					+ "-" + month2 + "-" + date2.getYear());
+
+			TextLine title = new TextLine(f1, "Raport za "
+					+ AppSettings.DATE_YMD_FORMAT.format(d1) + " - "
+					+ AppSettings.DATE_FORMAT.format(d2) + "\n\n");
 			title.setFont(f1);
 			title.setColor(Color.black);
-	 
-			title.setPosition(page.getWidth()/2-title.getWidth()/2, 40f);
+
+			title.setPosition(page.getWidth() / 2 - title.getWidth() / 2, 40f);
 			title.drawOn(page);
-				
+
 			Table table = new Table();
 			List<List<Cell>> tableData = new ArrayList<List<Cell>>();
 			List<Cell> kolomJudul = new ArrayList<Cell>();
-			Cell judul1 = new Cell(f1,"Tanggal");
-			Cell judul2 = new Cell(f1,"Telpon");
-			Cell judul3 = new Cell(f1,"Nominal");
-			Cell judul4 = new Cell(f1,"Status");
-			Cell judul5 = new Cell(f1,"Harga");
+			Cell judul1 = new Cell(f1, "Data");
+			Cell judul2 = new Cell(f1, "Trasa");
+			Cell judul3 = new Cell(f1, "Km");
+			Cell judul4 = new Cell(f1, "Cena");
+
 			kolomJudul.add(judul1);
 			kolomJudul.add(judul2);
 			kolomJudul.add(judul3);
 			kolomJudul.add(judul4);
-			kolomJudul.add(judul5);
-			tableData.add(kolomJudul);
-				
-			List<Cell> record = new ArrayList<Cell>();
 
-			Cell tanggal = new Cell(f1,"r1");
-			Cell telpon = new Cell(f1,"r2");
-			Cell nominal = new Cell(f1,"r3");
-			Cell status = new Cell(f1,"r4");
-			Cell harga = new Cell(f1,"r5");
-			
-			
-			record.add(tanggal);
-			record.add(telpon);
-			record.add(nominal);
-			record.add(status);
-			record.add(harga);
-			tableData.add(record);
-			
+			tableData.add(kolomJudul);
+
+			DaoSession daoSession = DataBase.getInstance().getDaoSession();
+			TrasaDao trasaDao = daoSession.getTrasaDao();
+			List<Trasa> trasy = trasaDao.queryBuilder()
+					.where(Properties.Data.ge(d1), Properties.Data.le(d2))
+					.build().list();
+			// List<Trasa> trasy = trasaDao.queryBuilder().build().list();
+
+			if (trasy != null && trasy.size() > 0) {
+
+				Map<Date, List<Trasa>> map = new TreeMap<Date, List<Trasa>>();
+				for (Trasa t : trasy) {
+					if (map.get(t.getData()) == null) {
+						map.put(t.getData(), new ArrayList<Trasa>());
+					}
+					map.get(t.getData()).add(t);
+
+				}
+
+				List<Cell> record;
 				
+				StringBuilder sbDay;
+				Integer sumaKmDnia=0, sumaKmRaportu=0;
+				Double sumaDnia =0.0, sumaRaportu=0.0;
+				for (Map.Entry<Date, List<Trasa>> entry : map.entrySet()) {
+					sbDay = new StringBuilder();
+					sumaKmDnia=0;
+					sumaDnia=0.0;
+					for (Trasa t1 : entry.getValue()) {
+						sbDay.append(TrasaUtils.getMiastaByJson(t1.getMiasta()));
+						sbDay.append(" = ");
+						sbDay.append(t1.getKm());
+						sbDay.append("km  ");
+						if (t1.getKierowca()) {
+							if (t1.getAutoSluzbowe()) {
+								sbDay.append(AppSettings.SAMOCHOD_SLUZBOWY);
+							} else {
+								sbDay.append(AppSettings.SAMOCHOD_PRYWATNY);
+							}
+							if (t1.getCzyZPasazerem()) {
+								sbDay.append(AppSettings.Z_PASAZEREM);
+							}
+
+						} else {
+							sbDay.append(AppSettings.PASAZER);
+						}
+						sbDay.append("\n\t\r");
+						sumaKmDnia+=t1.getKm();
+						sumaDnia += StawkiUtils.getWartoscTrasy(t1);
+					}// END  dzien
+					
+					record = new ArrayList<Cell>();
+					
+					record.add(new Cell(f1, AppSettings.DATE_YMD_FORMAT.format(entry.getKey())));
+					record.add(new Cell(f1, sbDay.toString()));
+					record.add(new Cell(f1, String.valueOf(sumaKmDnia)));
+					record.add(new Cell(f1, AppSettings.PRICE_FORMAT1.format(sumaDnia) + "€"));
+
+					tableData.add(record);
+					
+					sumaKmRaportu += sumaKmDnia;
+					sumaRaportu += sumaDnia;
+				}
+				record = new ArrayList<Cell>();
+				record.add(new Cell(f1,""));
+				record.add(new Cell(f1,""));
+				record.add(new Cell(f1, String.valueOf(sumaKmRaportu)));
+				record.add(new Cell(f1, AppSettings.PRICE_FORMAT1.format(sumaRaportu) + "€"));
+
+				tableData.add(record);
+				
+
+
+			}
+
 			table.setData(tableData, Table.DATA_HAS_1_HEADER_ROWS);
 			table.autoAdjustColumnWidths();
-			table.setColumnWidth(0, 80.0f);
+			table.setColumnWidth(0, 100.0f);
 			table.wrapAroundCellText();
-			table.setPosition(page.getWidth()/2-table.getWidth()/2, 40f);
-			
-			
+			table.setPosition(page.getWidth() / 2 - table.getWidth() / 2, 40f);
+
 			table.drawOn(page);
-			
-			
+
 			pdf.flush();
 			fos.close();
-			Toast.makeText(getActivity(), "Wygenerowano pdf", Toast.LENGTH_LONG).show();
-			
+			Toast.makeText(getActivity(), "Wygenerowano pdf", Toast.LENGTH_LONG)
+					.show();
+			showPdf();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 	}
-	
-	
+
 	private void showPdfFromMemory() {
-		
+
 		Uri uri = Uri.parse("content://pl.kilometrowka/" + "mydata.pdf");
 
-
 		Intent intent = new Intent(Intent.ACTION_VIEW);
-	//	intent.setDataAndType(Uri.fromFile(file), "application/pdf");
+		// intent.setDataAndType(Uri.fromFile(file), "application/pdf");
 		intent.setDataAndType(uri, "application/pdf");
 
 		intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-		startActivity(intent);		
+		startActivity(intent);
 	}
 
 	private void createPdfInMemory() {
-		
-		
-		
-		 try {
-	         FileOutputStream fos = getActivity().openFileOutput(file,getActivity().MODE_WORLD_READABLE);
-	         
-	         
-	         PDF pdf = new PDF(fos);
-				pdf.setTitle("TYTULLL");
-				
-				InputStream f = getActivity().getAssets().open("img.jpg");
-				Image image = new Image(pdf, f, ImageType.JPG);
-				Page page = new Page(pdf, A4.PORTRAIT);
-				image.setPosition(0, 0);
-				image.drawOn(page);
 
-				
-				 Box flag = new Box(); flag.setPosition(100.0f, 100.0f);
-				 flag.setSize(190.0f, 100.0f); flag.setColor(Color.red);
-				 flag.drawOn(page);
-				 
+		try {
+			FileOutputStream fos = getActivity().openFileOutput(file,
+					getActivity().MODE_WORLD_READABLE);
 
-				Font f1 = new Font(pdf, CoreFont.HELVETICA_BOLD);
+			PDF pdf = new PDF(fos);
+			pdf.setTitle("TYTULLL");
 
-				TextLine text = new TextLine(f1);
+			InputStream f = getActivity().getAssets().open("img.jpg");
+			Image image = new Image(pdf, f, ImageType.JPG);
+			Page page = new Page(pdf, A4.PORTRAIT);
+			image.setPosition(0, 0);
+			image.drawOn(page);
 
-				text = new TextLine(f1, "Przykladowy tekst w internal");
-				text.setPosition(70.0, 50.0);
-				text.drawOn(page);
+			Box flag = new Box();
+			flag.setPosition(100.0f, 100.0f);
+			flag.setSize(190.0f, 100.0f);
+			flag.setColor(Color.red);
+			flag.drawOn(page);
 
-				pdf.flush();
-				Toast.makeText(getActivity(), "Wygenerowano pdf", Toast.LENGTH_LONG).show();
-				fos.close();
-	         Toast.makeText(getActivity(),"file saved",
-	         Toast.LENGTH_SHORT).show();
-	      } catch (Exception e) {
-	         // TODO Auto-generated catch block
-	         e.printStackTrace();
-	      }
-		
+			Font f1 = new Font(pdf, CoreFont.HELVETICA_BOLD);
+
+			TextLine text = new TextLine(f1);
+
+			text = new TextLine(f1, "Przykladowy tekst w internal");
+			text.setPosition(70.0, 50.0);
+			text.drawOn(page);
+
+			pdf.flush();
+			Toast.makeText(getActivity(), "Wygenerowano pdf", Toast.LENGTH_LONG)
+					.show();
+			fos.close();
+			Toast.makeText(getActivity(), "file saved", Toast.LENGTH_SHORT)
+					.show();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
-	
 
 }

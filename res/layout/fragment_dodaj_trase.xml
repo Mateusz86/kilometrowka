@@ -6,7 +6,7 @@
     android:orientation="vertical" >
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:id="@+id/citywrapper" >
@@ -16,6 +16,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
+            android:singleLine="true"
+            android:inputType="textCapCharacters"
             android:text="@string/skad" />
 
         <EditText
@@ -26,7 +28,9 @@
             android:layout_toRightOf="@+id/miejscowosc"
             android:lines="1"
             android:maxLines="1"
-            android:singleLine="true" />
+            android:singleLine="true" 
+            android:inputType="textCapSentences"
+            />
         <EditText
             android:id="@+id/dokadEdt"
             android:layout_width="match_parent"
@@ -35,7 +39,8 @@
             android:layout_toRightOf="@+id/miejscowosc"
             android:lines="1"
             android:maxLines="1"
-            android:singleLine="true" />
+            android:singleLine="true"
+            android:inputType="textCapSentences" />
     </LinearLayout>
     <LinearLayout android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -48,28 +53,6 @@
             android:text="@string/addcity"/>
     </LinearLayout>
 
-    <!-->RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp" >
-
-        <!pl.kilometrowka.components.ExTextView
-            android:id="@+id/dokad"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="@string/dokad" />
-
-        <EditText
-            android:id="@+id/dokadEdt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_toRightOf="@+id/dokad"
-            android:lines="1"
-            android:maxLines="1"
-            android:singleLine="true" />
-    </RelativeLayout-->
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -95,38 +78,7 @@
             android:singleLine="true" />
     </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp" >
-
-        <pl.kilometrowka.components.ExTextView
-            android:id="@+id/samochod"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="@string/samochod" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_toRightOf="@+id/samochod"
-            android:orientation="horizontal" >
-
-            <CheckBox
-                android:id="@+id/prywatny"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/prywatny" />
-
-            <CheckBox
-                android:id="@+id/publiczny"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/publiczny" />
-        </LinearLayout>
-    </RelativeLayout>
+   
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -138,8 +90,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:text="@string/samochod"
-            android:visibility="invisible" />
+            android:text="@string/Czykierowca"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -162,6 +113,50 @@
                 android:text="@string/pasazer" />
         </LinearLayout>
     </RelativeLayout>
+    
+    <RelativeLayout
+        android:id="@+id/kierowca_wrapper"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp" >
+
+        <pl.kilometrowka.components.ExTextView
+            android:id="@+id/samochod"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@string/samochod" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@+id/samochod"
+            android:orientation="vertical" >
+
+            <CheckBox
+                android:id="@+id/prywatny"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/prywatny" />
+
+            <CheckBox
+                android:id="@+id/sluzbowy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/publiczny" />
+            
+            <CheckBox
+                android:id="@+id/czy_z_pasazerem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="+ pasażer" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    
+    
+    
 
     <Button
         android:id="@+id/zapisz"

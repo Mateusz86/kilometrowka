@@ -2,14 +2,14 @@
 <resources>
 
     <string name="app_name">Kilometrowka</string>
-    <string name="kalendarz">Kalendarz</string>
     <string name="raport">Raport</string>
     <string name="ustawienia">Ustawienia</string>
     <string name="action_settings">Ustawienia</string>
     <string name="action_raport">Generuj Raport</string>
     <string name="pokazListeTras">Przeglądaj</string>
     <string name="trasa">Trasa:</string>
-    <string name="km">Przejechane KM:</string>
+    <string name="km">Przejechane:</string>
+    <string name="Czykierowca">Jestem:</string>
     <string name="samochod">Samochod:</string>
     <string name="data">Data:</string>
     <string name="delete">Delete:</string>
@@ -18,8 +18,9 @@
     <string name="iloscKm">Ilość kilometrów:</string>
     <string name="zapisz">Zapisz</string>
     <string name="prywatny">Slużbowy</string>
-    <string name="publiczny">Publiczny</string>
+    <string name="publiczny">Prywatny</string>
     <string name="kierowca">Kierowca</string>
     <string name="pasazer">Pasażer</string>
     <string name="addcity">+</string>
+    <string name="suma">Suma:</string>
 </resources>

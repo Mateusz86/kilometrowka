@@ -7,7 +7,8 @@ package pl.kilometrowka.dao;
 public class StawkiPasazera {
 
     private Long id;
-    private Integer km;
+    private Integer km_od;
+    private Integer km_do;
     private Double cena;
 
     public StawkiPasazera() {
@@ -17,9 +18,10 @@ public class StawkiPasazera {
         this.id = id;
     }
 
-    public StawkiPasazera(Long id, Integer km, Double cena) {
+    public StawkiPasazera(Long id, Integer km_od, Integer km_do, Double cena) {
         this.id = id;
-        this.km = km;
+        this.km_od = km_od;
+        this.km_do = km_do;
         this.cena = cena;
     }
 
@@ -31,12 +33,20 @@ public class StawkiPasazera {
         this.id = id;
     }
 
-    public Integer getKm() {
-        return km;
+    public Integer getKm_od() {
+        return km_od;
     }
 
-    public void setKm(Integer km) {
-        this.km = km;
+    public void setKm_od(Integer km_od) {
+        this.km_od = km_od;
+    }
+
+    public Integer getKm_do() {
+        return km_do;
+    }
+
+    public void setKm_do(Integer km_do) {
+        this.km_do = km_do;
     }
 
     public Double getCena() {

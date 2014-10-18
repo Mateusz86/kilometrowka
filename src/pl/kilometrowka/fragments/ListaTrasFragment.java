@@ -3,13 +3,17 @@ package pl.kilometrowka.fragments;
 import java.util.Date;
 import java.util.List;
 
+import com.pdfjet.TextAlign;
+
 import pl.kilometrowka.KalendarzActivity;
 import pl.kilometrowka.R;
 import pl.kilometrowka.adapter.Adapter;
+import pl.kilometrowka.core.AppSettings;
 import pl.kilometrowka.dao.DaoSession;
 import pl.kilometrowka.dao.DataBase;
 import pl.kilometrowka.dao.Trasa;
 import pl.kilometrowka.interfaces.ChangeFragment;
+import pl.kilometrowka.utils.StawkiUtils;
 import pl.kilometrowka.utils.TrasaUtils;
 import android.app.Activity;
 import android.os.Bundle;
@@ -21,6 +25,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class ListaTrasFragment extends Fragment implements OnClickListener{
 	
@@ -32,19 +37,21 @@ public class ListaTrasFragment extends Fragment implements OnClickListener{
  private Button dodajTrase;
  ChangeFragment changeFragmentListener;
  
+ 
  private OnClickListener deleteListener= new OnClickListener() {
 	
 	@Override
 	public void onClick(View v) {
 		int pos = (Integer) v.getTag();
 		DaoSession daoSession = DataBase.getInstance().getDaoSession();
-		List<Trasa> trasy = daoSession.getTrasaDao().queryBuilder().build().list();
-		if(trasy!=null && trasy.size()>0) {
-			Trasa trasaToDelete = trasy.get(pos);
+		//List<Trasa> trasy = daoSession.getTrasaDao().queryBuilder().build().list();
+		//if(trasy!=null && trasy.size()>0) {
+			Trasa trasaToDelete = listaTras.get(pos);
 			daoSession.getTrasaDao().delete(trasaToDelete);
-			adapter.setList(daoSession.getTrasaDao().queryBuilder().build().list());
+			listaTras.remove(pos);
+			adapter.setList(listaTras);
 			adapter.notifyDataSetChanged();
-		}
+		//}
 		
 	}
 };
@@ -92,7 +99,18 @@ public class ListaTrasFragment extends Fragment implements OnClickListener{
 		listView = (ListView) view.findViewById(R.id.listView);
 		adapter = new Adapter<Trasa>(listaTras,getActivity(),deleteListener);
 		listView.setAdapter(adapter);
+		System.out.println(listaTras);
 		
+		TextView data = (TextView) view.findViewById(R.id.list_date); 
+		data.setText(AppSettings.DATE_YMD_FORMAT.format(date));
+		Double suma=0.0;
+		int sumaKm=0;
+		for(Trasa t:listaTras){
+			sumaKm+=t.getKm();
+			suma+=StawkiUtils.getWartoscTrasy(t);
+		}
+		TextView sumaDnia =(TextView) view.findViewById(R.id.sumaDnia);
+		sumaDnia.setText(""+sumaKm+" km - "+AppSettings.PRICE_FORMAT1.format(suma.doubleValue())+"€");
 	}
 
 	

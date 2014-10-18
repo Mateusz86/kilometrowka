@@ -24,8 +24,9 @@ public class StawkiPasazeraDao extends AbstractDao<StawkiPasazera, Long> {
     */
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
-        public final static Property Km = new Property(1, Integer.class, "km", false, "KM");
-        public final static Property Cena = new Property(2, Double.class, "cena", false, "CENA");
+        public final static Property Km_od = new Property(1, Integer.class, "km_od", false, "KM_OD");
+        public final static Property Km_do = new Property(2, Integer.class, "km_do", false, "KM_DO");
+        public final static Property Cena = new Property(3, Double.class, "cena", false, "CENA");
     };
 
 
@@ -42,8 +43,9 @@ public class StawkiPasazeraDao extends AbstractDao<StawkiPasazera, Long> {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "'STAWKI_PASAZERA' (" + //
                 "'_id' INTEGER PRIMARY KEY ," + // 0: id
-                "'KM' INTEGER," + // 1: km
-                "'CENA' REAL);"); // 2: cena
+                "'KM_OD' INTEGER," + // 1: km_od
+                "'KM_DO' INTEGER," + // 2: km_do
+                "'CENA' REAL);"); // 3: cena
     }
 
     /** Drops the underlying database table. */
@@ -62,14 +64,19 @@ public class StawkiPasazeraDao extends AbstractDao<StawkiPasazera, Long> {
             stmt.bindLong(1, id);
         }
  
-        Integer km = entity.getKm();
-        if (km != null) {
-            stmt.bindLong(2, km);
+        Integer km_od = entity.getKm_od();
+        if (km_od != null) {
+            stmt.bindLong(2, km_od);
+        }
+ 
+        Integer km_do = entity.getKm_do();
+        if (km_do != null) {
+            stmt.bindLong(3, km_do);
         }
  
         Double cena = entity.getCena();
         if (cena != null) {
-            stmt.bindDouble(3, cena);
+            stmt.bindDouble(4, cena);
         }
     }
 
@@ -84,8 +91,9 @@ public class StawkiPasazeraDao extends AbstractDao<StawkiPasazera, Long> {
     public StawkiPasazera readEntity(Cursor cursor, int offset) {
         StawkiPasazera entity = new StawkiPasazera( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
-            cursor.isNull(offset + 1) ? null : cursor.getInt(offset + 1), // km
-            cursor.isNull(offset + 2) ? null : cursor.getDouble(offset + 2) // cena
+            cursor.isNull(offset + 1) ? null : cursor.getInt(offset + 1), // km_od
+            cursor.isNull(offset + 2) ? null : cursor.getInt(offset + 2), // km_do
+            cursor.isNull(offset + 3) ? null : cursor.getDouble(offset + 3) // cena
         );
         return entity;
     }
@@ -94,8 +102,9 @@ public class StawkiPasazeraDao extends AbstractDao<StawkiPasazera, Long> {
     @Override
     public void readEntity(Cursor cursor, StawkiPasazera entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
-        entity.setKm(cursor.isNull(offset + 1) ? null : cursor.getInt(offset + 1));
-        entity.setCena(cursor.isNull(offset + 2) ? null : cursor.getDouble(offset + 2));
+        entity.setKm_od(cursor.isNull(offset + 1) ? null : cursor.getInt(offset + 1));
+        entity.setKm_do(cursor.isNull(offset + 2) ? null : cursor.getInt(offset + 2));
+        entity.setCena(cursor.isNull(offset + 3) ? null : cursor.getDouble(offset + 3));
      }
     
     /** @inheritdoc */
