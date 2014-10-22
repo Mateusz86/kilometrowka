@@ -5,14 +5,19 @@ import java.util.Date;
 
 import pl.kilometrowka.KalendarzActivity;
 import pl.kilometrowka.R;
+import pl.kilometrowka.RaportActivity;
 import pl.kilometrowka.interfaces.ChangeFragment;
+import pl.kilometrowka.utils.StawkiUtils;
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -22,14 +27,16 @@ import android.widget.Toast;
 
 import com.squareup.timessquare.CalendarPickerView;
 import com.squareup.timessquare.CalendarPickerView.OnDateSelectedListener;
+import com.squareup.timessquare.CalendarPickerView.OnWeekNrSelectedListener;
 import com.squareup.timessquare.CalendarPickerView.SelectionMode;
 
-public class KalendarzFragment extends Fragment implements OnClickListener {
+public class KalendarzFragment extends Fragment implements OnClickListener{
 
 	public final String TAG = KalendarzFragment.class.getSimpleName();
 	private CalendarPickerView calendar;
 	private Button showListTrace;
 	ChangeFragment changeFragmentListener;
+	private Context context;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -48,6 +55,7 @@ public class KalendarzFragment extends Fragment implements OnClickListener {
 				false);
 		setUpViews(view);
 		setUpListeners();
+		context = view.getContext();
 		
 		if (savedInstanceState != null) {
             // Restore last state
@@ -70,26 +78,48 @@ public class KalendarzFragment extends Fragment implements OnClickListener {
 
 		final Calendar lastYear = Calendar.getInstance();
 		lastYear.add(Calendar.YEAR, -1);
+        
 
+		
 		calendar.init(lastYear.getTime(), nextYear.getTime()) //
 				.inMode(SelectionMode.SINGLE) //
 		 .withSelectedDate(new Date());
+		
+		CalendarPickerView.setUzupelnioneDaty(StawkiUtils.getUzupelnioneDni());
+		
+		calendar.setWeekNrSelectedListener(new OnWeekNrSelectedListener() {
+
+			@Override
+			public void OnWeekNrSelected(int week,int year) {
+				// TODO Auto-generated method stub
+				
+				//changeFragmentListener.changeFragment(KalendarzActivity.DZIEN_FRAGMENT,date);
+				Intent intent = new Intent(context, RaportActivity.class);
+				intent.putExtra("week", week);
+				intent.putExtra("year", year);
+				startActivity(intent);
+			}
+
+		});
 		
 		calendar.setOnDateSelectedListener(new OnDateSelectedListener() {
 			
 			@Override
 			public void onDateUnselected(Date date) {
 				// TODO Auto-generated method stub
-				Toast.makeText(getActivity(),"a-"+date.toString(), Toast.LENGTH_SHORT).show();
+				
 			}
 			
 			@Override
 			public void onDateSelected(Date date) {
 				// TODO Auto-generated method stub
-				Toast.makeText(getActivity(),"b-"+date.toString(), Toast.LENGTH_SHORT).show();
-				
+				if(date!=null)
+					changeFragmentListener.changeFragment(KalendarzActivity.DZIEN_FRAGMENT,date);
 			}
 		});
+		
+		
+		
 	}
 
 	private void setUpListeners() {
@@ -102,7 +132,7 @@ public class KalendarzFragment extends Fragment implements OnClickListener {
 		 
 		switch (v.getId()) {
 		case R.id.pokazListeTras:
-			changeFragmentListener.changeFragment(KalendarzActivity.LISTA_TRAS_FRAGMENT,calendar.getSelectedDate());    
+			changeFragmentListener.changeFragment(KalendarzActivity.DZIEN_FRAGMENT,calendar.getSelectedDate());    
 			break;
 
 		default:

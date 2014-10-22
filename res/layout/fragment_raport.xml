@@ -2,29 +2,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center_horizontal"
     android:orientation="vertical" >
-    
-    <LinearLayout 
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:orientation="vertical">
 
-        <DatePicker
-            android:id="@+id/datePicker1"
-            style="@style/_AppTheme"
-            android:layout_width="fill_parent"
+        <TextView
+            android:id="@+id/raport_data_text"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:calendarViewShown="false" />
+            android:gravity="center"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="sss"
+            android:textStyle="bold" />
 
-        <DatePicker
-            android:id="@+id/datePicker2"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:calendarViewShown="false" />
-        
-    </LinearLayout>
-    
-    
     <Button 
         android:id="@+id/generuj_pdf"
         android:layout_width="wrap_content"

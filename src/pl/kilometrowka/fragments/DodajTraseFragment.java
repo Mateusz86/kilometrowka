@@ -97,6 +97,7 @@ public class DodajTraseFragment extends Fragment implements OnClickListener {
 				
 				root.addView(vlEdit);
 				citis.add(vlEdit);
+				
 			}
 		});
 

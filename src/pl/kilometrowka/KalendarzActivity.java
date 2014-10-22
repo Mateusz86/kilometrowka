@@ -1,9 +1,13 @@
 package pl.kilometrowka;
 
 import java.util.Date;
+
+import com.splunk.mint.Mint;
+
 import pl.kilometrowka.core.AppSettings;
 import pl.kilometrowka.dao.Trasa;
 import pl.kilometrowka.fragments.DodajTraseFragment;
+import pl.kilometrowka.fragments.DzienFragment;
 import pl.kilometrowka.fragments.KalendarzFragment;
 import pl.kilometrowka.fragments.ListaTrasFragment;
 import pl.kilometrowka.interfaces.ChangeFragment;
@@ -27,6 +31,7 @@ public class KalendarzActivity extends ActionBarActivity implements
 	public static final int KALENDARZ_FRAGMENT = 0;
 	public static final int LISTA_TRAS_FRAGMENT = 1;
 	public static final int DODAJ_TRASE_FRAGMENT = 2;
+	public static final int DZIEN_FRAGMENT = 3;
 	
 	public static String CHOOSE_DATE="CHOOSEDATE";
 	
@@ -39,75 +44,11 @@ public class KalendarzActivity extends ActionBarActivity implements
 		ActionBar bar = getActionBar();
 		bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#33b5e5")));
 		
-		
+		Mint.initAndStartSession(this, "2cff8d08");
 		
 		AppSettings.setContext(this);
 		StawkiUtils.readCVSKierowcyFile();
 		StawkiUtils.readCVSPasazerFile();
-		
-		Trasa t = new Trasa();
-		t.setKierowca(false);
-		t.setKm(100);
-		
-		Double suma = StawkiUtils.getWartoscTrasy(t);
-		
-		
-		System.out.println("Testy dla 100 km");
-		System.out.println(suma);
-		
-		t = new Trasa();
-		t.setKierowca(true);
-		t.setAutoSluzbowe(true);
-		t.setKm(100);
-		System.out.println(AppSettings.PRICE_FORMAT1.format(StawkiUtils.getWartoscTrasy(t).doubleValue()));
-
-		t = new Trasa();
-		t.setKierowca(true);
-		t.setAutoSluzbowe(false);
-		t.setKm(100);
-		System.out.println(StawkiUtils.getWartoscTrasy(t));
-
-		t = new Trasa();
-		t.setKierowca(true);
-		t.setAutoSluzbowe(true);
-		t.setCzyZPasazerem(true);
-		t.setKm(100);
-		System.out.println(StawkiUtils.getWartoscTrasy(t));
-
-		// test bazy danych
-//		DaoSession daoSession = DataBase.getInstance().getDaoSession();
-//		daoSession.getTrasaDao().deleteAll();
-//		daoSession.getStawkiKierowcyDao().deleteAll();
-//		daoSession.getStawkiPasazeraDao().deleteAll();
-//		
-//		TrasaDao trasaDao = daoSession.getTrasaDao();
-//
-//		Trasa trasa = new Trasa();
-//		trasa.setMiasta("Krak—w,Katowice");
-//		trasa.setKm(new Double(23.0));
-//		trasa.setKierowca(true);
-//		trasa.setAutoSluzbowe(true);
-//		
-//		String dateString =AppSettings.DATE_YMD_FORMAT.format(new Date());
-//		try {
-//		Date dataTemp=AppSettings.DATE_YMD_FORMAT.parse(dateString);
-//		trasa.setData(dataTemp);
-//		} catch (ParseException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		
-//		
-//
-//		trasaDao.insert(trasa);
-//
-//		List<Trasa> trasy = trasaDao.queryBuilder().build().list();
-//		System.out.println("trasy");
-//		System.out.println(trasy);
-//		Log.e(TAG,trasy.get(0).getData()+"");
-		
-		
-		
 		
 		
 		if (savedInstanceState == null) {
@@ -119,11 +60,7 @@ public class KalendarzActivity extends ActionBarActivity implements
         	KalendarzFragment test = (KalendarzFragment) getSupportFragmentManager().findFragmentByTag("KALENDARZ_FRAGMENT_TAG");
         }
 		
-		Date d= new Date();
-		if(d.getMonth()!=9){
-		Integer[] i= new Integer[1];
-		i[100]=3;
-		}
+		
 	}
 
 
@@ -144,7 +81,7 @@ public class KalendarzActivity extends ActionBarActivity implements
 			ft.addToBackStack("KALENDARZ_FRAGMENT");
 			ft.commit();
 			break;
-		case 1:
+	/*	case 1:
 			ListaTrasFragment listaTrasFragment = ListaTrasFragment.newInstance(date);
 			ft.replace(R.id.kontener,listaTrasFragment);
 			ft.addToBackStack("LISTA_TRAS_FRAGMENT");
@@ -155,7 +92,15 @@ public class KalendarzActivity extends ActionBarActivity implements
 			ft.replace(R.id.kontener, dodajTraseFragment);
 			ft.addToBackStack("DODAJ_TRASE_FRAGMENT");
 			ft.commit();
-			break;
+			break;*/
+			
+		case 3:
+			DzienFragment dzienFragment = DzienFragment.newInstance(date);
+			ft.replace(R.id.kontener,dzienFragment);
+			ft.addToBackStack("DZIEN_FRAGMENT");
+			ft.commit();
+			break;	
+			
 		default:
 			break;
 		}

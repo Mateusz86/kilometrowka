@@ -27,6 +27,13 @@ public class RaportActivity extends ActionBarActivity implements
 		if (savedInstanceState == null) {
 			FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 			RaportFragment raportFragment = new RaportFragment();
+			int week = this.getIntent().getIntExtra("week", 0);
+			int year = this.getIntent().getIntExtra("year", 0);
+			
+			Bundle bundle = new Bundle();
+			bundle.putInt("week", week);
+			bundle.putInt("year", year);
+			raportFragment.setArguments(bundle);
 			ft.replace(R.id.kontener, raportFragment,"RAPORT_FRAGMENT_TAG");
 			ft.commit();
         } else {

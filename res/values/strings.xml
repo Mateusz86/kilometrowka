@@ -23,4 +23,10 @@
     <string name="pasazer">Pasażer</string>
     <string name="addcity">+</string>
     <string name="suma">Suma:</string>
+    
+    <string name="jednostka">km</string>
+    <string name="kierowca_ap">Kierowca auta prywatnego</string>
+    <string name="kierowca_app">Kierowca auta prywatnego + 1 pasażer</string>
+    <string name="kierowca_as">Kierowca auta służbowego</string>
+    <string name="kierowca_asp">Kierowca auta służbowego + 1 pasażer</string>
 </resources>
